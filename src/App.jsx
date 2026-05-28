@@ -159,7 +159,7 @@ style={{
 display:'flex',
 justifyContent:'center',
 alignItems:'center',
-height:'100vh'
+minHeight:'100vh'
 }}
 >
 
@@ -364,6 +364,10 @@ width:
 esMovil
 ?'100%'
 :'35%',
+height:
+esMovil
+?'50vh'
+:'100vh',
 padding:'20px',
 overflow:'auto'
 }}
@@ -730,7 +734,15 @@ borderRadius:'8px'
 }
 </div>
 
-<div style={{flex:1}}>
+<div
+style={{
+flex:1,
+height:
+esMovil
+?'50vh'
+:'100vh'
+}}
+>
 
 <MapContainer
 center={[-25.805,-62.834]}
