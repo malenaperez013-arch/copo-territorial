@@ -7,12 +7,26 @@ MapContainer,
 TileLayer,
 Polygon,
 Marker,
-Popup
+Popup,
+Tooltip
 } from 'react-leaflet'
 
 import { territorios } from './data/territorios'
 import { supabase } from './lib/supabase'
 import Login from './Login'
+import L from 'leaflet'
+
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
+import markerIcon from 'leaflet/dist/images/marker-icon.png'
+import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+
+delete L.Icon.Default.prototype._getIconUrl
+
+L.Icon.Default.mergeOptions({
+iconRetinaUrl: markerIcon2x,
+iconUrl: markerIcon,
+shadowUrl: markerShadow,
+})
 
 export default function App(){
 
