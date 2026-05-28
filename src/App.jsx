@@ -761,11 +761,12 @@ const ultimoRelevamiento=
 
 datosTerritorio[0]
 
-if(true){
+if(t.visual==='marcador'){
 
 return(
 
-<Popup
+<Marker
+opacity={0}
 key={t.id}
 position={t.coordenadas}
 
@@ -895,7 +896,7 @@ borderRadius:'8px'
 
 </Popup>
 
-</Popup>
+</Marker>
 )
 
 }
