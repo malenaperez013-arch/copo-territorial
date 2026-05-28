@@ -782,6 +782,12 @@ t.nombre
 }}
 
 >
+    
+<Tooltip permanent direction="top">
+
+{t.nombre}
+
+</Tooltip>
 
 <Popup>
 
