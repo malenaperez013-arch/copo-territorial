@@ -761,11 +761,11 @@ const ultimoRelevamiento=
 
 datosTerritorio[0]
 
-if(t.visual==='marcador'){
+if(true){
 
 return(
 
-<Marker
+<Popup
 key={t.id}
 position={t.coordenadas}
 
@@ -782,7 +782,7 @@ t.nombre
 }}
 
 >
-    
+
 <Tooltip permanent direction="top">
 
 {t.nombre}
@@ -895,7 +895,7 @@ borderRadius:'8px'
 
 </Popup>
 
-</Marker>
+</Popup>
 )
 
 }
