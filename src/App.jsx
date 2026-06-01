@@ -772,7 +772,6 @@ r=>r.territorio===t.nombre
 const ultimoRelevamiento=
 
 datosTerritorio[0]
-
 if(t.visual==='marcador'){
 
 return(
@@ -781,82 +780,42 @@ return(
 opacity={0}
 key={t.id}
 position={t.coordenadas}
-
 eventHandlers={{
-
 click:()=>{
-
-setTerritorioSeleccionado(
-t.nombre
-)
-
+setTerritorioSeleccionado(t.nombre)
 }
-
 }}
-
 >
 
 <Tooltip permanent direction="top">
-
 {t.nombre}
-
 </Tooltip>
 
 <Popup>
 
-<div
-style={{
-maxWidth:'250px'
-}}
->
+<div style={{maxWidth:'250px'}}>
 
-<h3>
-📍 {t.nombre}
-</h3>
+<h3>📍 {t.nombre}</h3>
 
 <div>
-Total relevamientos:
-{datosTerritorio.length}
+Total relevamientos: {datosTerritorio.length}
 </div>
 
 {
-
 ultimoRelevamiento && (
 
-<div
-style={{
-marginTop:'10px'
-}}
->
+<div style={{marginTop:'10px'}}>
 
-<div>
-👤 {ultimoRelevamiento.referente}
-</div>
-
-<div>
-🏛️ {ultimoRelevamiento.estadoPolitico}
-</div>
-
-<div>
-📅 {ultimoRelevamiento.fecha}
-</div>
-
-<div>
-📝 {ultimoRelevamiento.observaciones}
-</div>
-
-<div
-style={{
-marginTop:'10px',
-fontWeight:'bold'
-}}
->
-
-📁 Historial:
-{datosTerritorio.length}
-relevamientos
-
-</div>
+<div>👤 {ultimoRelevamiento.referente}</div>
+<div>🏛️ {ultimoRelevamiento.estadoPolitico}</div>
+<div>📅 {ultimoRelevamiento.fecha}</div>
+<div>🏥 {ultimoRelevamiento.salud}</div>
+<div>🏫 {ultimoRelevamiento.educacion}</div>
+<div>🛣️ {ultimoRelevamiento.calles}</div>
+<div>⚠️ {ultimoRelevamiento.necesidades}</div>
+<div>💪 {ultimoRelevamiento.fortalezas}</div>
+<div>💡 {ultimoRelevamiento.propuesta}</div>
+<div>📝 {ultimoRelevamiento.observaciones}</div>
 
 {
 ultimoRelevamiento.imagenes && (
@@ -871,17 +830,15 @@ marginTop:'10px'
 >
 
 {
-
 ultimoRelevamiento.imagenes
 .split(',')
-
+.filter(img => img.trim() !== '')
 .map((img,index)=>(
 
 <img
 key={index}
 src={img}
 alt=''
-
 style={{
 width:'70px',
 height:'70px',
@@ -891,13 +848,21 @@ borderRadius:'8px'
 />
 
 ))
-
 }
 
 </div>
 
 )
 }
+
+<div
+style={{
+marginTop:'10px',
+fontWeight:'bold'
+}}
+>
+📁 Historial: {datosTerritorio.length} relevamientos
+</div>
 
 </div>
 
@@ -909,6 +874,7 @@ borderRadius:'8px'
 </Popup>
 
 </Marker>
+
 )
 
 }
@@ -918,25 +884,100 @@ return(
 <Polygon
 key={t.id}
 positions={t.coordenadas}
-
 eventHandlers={{
-
 click:()=>{
+setTerritorioSeleccionado(t.nombre)
+}
+}}
+>
 
-setTerritorioSeleccionado(
-t.nombre
-)
+<Popup>
 
+<div style={{maxWidth:'250px'}}>
+
+<h3>📍 {t.nombre}</h3>
+
+<div>
+Total relevamientos: {datosTerritorio.length}
+</div>
+
+{
+ultimoRelevamiento && (
+
+<div style={{marginTop:'10px'}}>
+
+<div>👤 {ultimoRelevamiento.referente}</div>
+<div>🏛️ {ultimoRelevamiento.estadoPolitico}</div>
+<div>📅 {ultimoRelevamiento.fecha}</div>
+<div>🏥 {ultimoRelevamiento.salud}</div>
+<div>🏫 {ultimoRelevamiento.educacion}</div>
+<div>🛣️ {ultimoRelevamiento.calles}</div>
+<div>⚠️ {ultimoRelevamiento.necesidades}</div>
+<div>💪 {ultimoRelevamiento.fortalezas}</div>
+<div>💡 {ultimoRelevamiento.propuesta}</div>
+<div>📝 {ultimoRelevamiento.observaciones}</div>
+
+{
+ultimoRelevamiento.imagenes && (
+
+<div
+style={{
+display:'flex',
+gap:'5px',
+overflowX:'auto',
+marginTop:'10px'
+}}
+>
+
+{
+ultimoRelevamiento.imagenes
+.split(',')
+.filter(img => img.trim() !== '')
+.map((img,index)=>(
+
+<img
+key={index}
+src={img}
+alt=''
+style={{
+width:'70px',
+height:'70px',
+objectFit:'cover',
+borderRadius:'8px'
+}}
+/>
+
+))
 }
 
-}}
+</div>
 
-/>
+)
+}
+
+<div
+style={{
+marginTop:'10px',
+fontWeight:'bold'
+}}
+>
+📁 Historial: {datosTerritorio.length} relevamientos
+</div>
+
+</div>
+
+)
+}
+
+</div>
+
+</Popup>
+
+</Polygon>
 
 )
 
 })
-
 }
 
 </MapContainer>
