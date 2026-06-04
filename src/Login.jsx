@@ -31,108 +31,135 @@ return(
 
 <div
 style={{
-
 display:'flex',
 justifyContent:'center',
 alignItems:'center',
 height:'100vh',
-background:'#f5f5f5'
-
+background:'linear-gradient(135deg,#111827,#1F2937)',
+padding:'20px'
 }}
 >
 
 <div
 style={{
+width:'400px',
+padding:'35px',
+background:'#111827',
+border:'1px solid #374151',
+borderRadius:'20px',
+boxShadow:'0 0 30px rgba(109,40,217,.35)',
+color:'white'
+}}
+>
 
-width:'350px',
-padding:'30px',
-background:'white',
-borderRadius:'12px',
-boxShadow:'0 0 15px rgba(0,0,0,.1)'
-
+<div
+style={{
+textAlign:'center',
+marginBottom:'30px'
 }}
 >
 
 <h1
 style={{
-
-textAlign:'center'
-
+margin:'0',
+fontSize:'32px',
+color:'#8B5CF6',
+letterSpacing:'2px'
 }}
 >
-
-Territorio Copo
-
+ZONA TERRITORIAL
 </h1>
 
+<h2
+style={{
+margin:'10px 0 5px 0',
+fontSize:'22px',
+color:'white'
+}}
+>
+MONTE QUEMADO
+</h2>
+
+<div
+style={{
+color:'#C4B5FD',
+fontWeight:'bold',
+fontSize:'16px'
+}}
+>
+La Libertad Avanza
+</div>
+
+</div>
+
 <input
-
-placeholder='Correo'
-
+placeholder='Correo electrónico'
 value={email}
-
 onChange={(e)=>
 setEmail(
 e.target.value
 )
 }
-
 style={{
-
 width:'100%',
-padding:'10px',
-marginBottom:'10px'
-
+padding:'12px',
+marginBottom:'12px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
 }}
-
 />
 
-
 <input
-
 type='password'
-
 placeholder='Contraseña'
-
 value={password}
-
 onChange={(e)=>
 setPassword(
 e.target.value
 )
 }
-
 style={{
-
-width:'100%',
-padding:'10px',
-marginBottom:'10px'
-
-}}
-
-/>
-
-
-<button
-
-onClick={ingresar}
-
-style={{
-
 width:'100%',
 padding:'12px',
-background:'#2563eb',
+marginBottom:'20px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
+}}
+/>
+
+<button
+onClick={ingresar}
+style={{
+width:'100%',
+padding:'14px',
+background:'#6D28D9',
 color:'white',
 border:'none',
-borderRadius:'8px'
-
+borderRadius:'10px',
+fontWeight:'bold',
+fontSize:'16px',
+cursor:'pointer'
 }}
-
 >
-
-Ingresar
-
+INGRESAR AL SISTEMA
 </button>
+
+<div
+style={{
+marginTop:'20px',
+textAlign:'center',
+fontSize:'12px',
+color:'#9CA3AF'
+}}
+>
+Sistema de Relevamiento Territorial
+</div>
 
 </div>
 
