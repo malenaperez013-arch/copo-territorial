@@ -120,6 +120,16 @@ const sinDatos =
 relevamientos.filter(
 r=>r.estadoPolitico==='Sin datos'
 ).length
+const totalTerritorios =
+territorios.length
+
+const relevados =
+new Set(
+relevamientos.map(r => r.territorio)
+).size
+
+const sinRelevamiento =
+totalTerritorios - relevados
 
 useEffect(()=>{
 
@@ -229,10 +239,12 @@ window.innerWidth<768
 const campo={
 
 width:'100%',
-padding:'10px',
+padding:'12px',
 marginBottom:'10px',
-borderRadius:'8px',
-border:'1px solid #ccc'
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white'
 
 }
 
@@ -403,7 +415,9 @@ esMovil
 ?'50vh'
 :'100vh',
 padding:'20px',
-overflow:'auto'
+overflow:'auto',
+background:'#111827',
+color:'white'
 }}
 >
 {
@@ -427,12 +441,92 @@ vista==='estadisticas' && (
 
 <hr />
 
-<h3>Presencia de la Intendencia</h3>
+<h3>🚦 Semáforo Territorial</h3>
 
-<div>🔴 Alta: {presenciaAlta}</div>
-<div>🟡 Media: {presenciaMedia}</div>
-<div>🟢 Baja: {presenciaBaja}</div>
-<div>⚪ Sin datos: {sinDatos}</div>
+<div
+style={{
+background:'#7F1D1D',
+padding:'10px',
+borderRadius:'8px',
+marginBottom:'8px'
+}}
+>
+🔴 Alta presencia: {presenciaAlta}
+</div>
+
+<div
+style={{
+background:'#854D0E',
+padding:'10px',
+borderRadius:'8px',
+marginBottom:'8px'
+}}
+>
+🟡 Presencia media: {presenciaMedia}
+</div>
+
+<div
+style={{
+background:'#166534',
+padding:'10px',
+borderRadius:'8px',
+marginBottom:'8px'
+}}
+>
+🟢 Baja presencia: {presenciaBaja}
+</div>
+
+<div
+style={{
+background:'#374151',
+padding:'10px',
+borderRadius:'8px',
+marginBottom:'8px'
+}}
+>
+⚪ Sin datos: {sinDatos}
+</div>
+
+<hr />
+
+<h3>📍 Cobertura Territorial</h3>
+<h3>⚠️ Territorios pendientes</h3>
+
+{
+territorios
+.filter(
+t => !relevamientos.some(
+r => r.territorio === t.nombre
+)
+)
+.slice(0,10)
+.map(t => (
+
+<div
+key={t.id}
+style={{
+background:'#1F2937',
+padding:'8px',
+borderRadius:'8px',
+marginBottom:'5px'
+}}
+>
+📍 {t.nombre}
+</div>
+
+))
+}
+<div>
+Territorios totales: {totalTerritorios}
+</div>
+
+<div>
+Relevados: {relevados}
+</div>
+
+<div>
+Pendientes: {sinRelevamiento}
+</div>
 
 </div>
 
@@ -457,7 +551,10 @@ width:'100%'
 <h1
 style={{
 margin:'0',
-color:'#8B5CF6'
+fontSize:'28px',
+fontWeight:'bold',
+color:'#8B5CF6',
+letterSpacing:'2px'
 }}
 >
 ZONA TERRITORIAL
@@ -465,7 +562,9 @@ ZONA TERRITORIAL
 
 <h2
 style={{
-margin:'5px 0'
+margin:'5px 0',
+fontSize:'20px',
+color:'white'
 }}
 >
 MONTE QUEMADO
@@ -474,7 +573,9 @@ MONTE QUEMADO
 <div
 style={{
 fontWeight:'bold',
-color:'#8B5CF6'
+fontSize:'18px',
+color:'#C4B5FD',
+marginTop:'5px'
 }}
 >
 La Libertad Avanza
@@ -763,10 +864,12 @@ onClick={guardar}
 style={{
 width:'100%',
 padding:'12px',
-background:'#2563eb',
+background:'#6D28D9',
 color:'white',
 border:'none',
-borderRadius:'10px'
+borderRadius:'10px',
+fontWeight:'bold',
+fontSize:'16px'
 }}
 >
 
@@ -808,7 +911,9 @@ relevamientosFiltrados.map((r)=>(
 <div
 key={r.id}
 style={{
-border:'1px solid #ddd',
+background:'#1F2937',
+border:'1px solid #374151',
+color:'white',
 padding:'10px',
 borderRadius:'10px',
 marginBottom:'10px'
