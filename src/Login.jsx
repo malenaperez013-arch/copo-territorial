@@ -6,6 +6,13 @@ export default function Login(){
 const [email,setEmail]=useState('')
 const [password,setPassword]=useState('')
 
+const [nombre,setNombre]=useState('')
+const [registroEmail,setRegistroEmail]=useState('')
+const [registroPassword,setRegistroPassword]=useState('')
+const [codigoInvitacion,setCodigoInvitacion]=useState('')
+
+const CODIGO_INVITACION = 'LLA2026'
+
 async function ingresar(){
 
 const {error}=await supabase.auth.signInWithPassword({
@@ -27,6 +34,45 @@ return
 
 }
 
+async function registrar(){
+
+if(codigoInvitacion !== CODIGO_INVITACION){
+
+alert(
+'Código de invitación incorrecto'
+)
+
+return
+
+}
+
+const { error } =
+await supabase.auth.signUp({
+
+email: registroEmail,
+password: registroPassword
+
+})
+
+if(error){
+
+alert(error.message)
+
+return
+
+}
+
+alert(
+'Cuenta creada correctamente. Ya puedes iniciar sesión.'
+)
+
+setNombre('')
+setRegistroEmail('')
+setRegistroPassword('')
+setCodigoInvitacion('')
+
+}
+
 return(
 
 <div
@@ -34,7 +80,7 @@ style={{
 display:'flex',
 justifyContent:'center',
 alignItems:'center',
-height:'100vh',
+minHeight:'100vh',
 background:'linear-gradient(135deg,#111827,#1F2937)',
 padding:'20px'
 }}
@@ -42,7 +88,7 @@ padding:'20px'
 
 <div
 style={{
-width:'400px',
+width:'420px',
 padding:'35px',
 background:'#111827',
 border:'1px solid #374151',
@@ -55,14 +101,14 @@ color:'white'
 <div
 style={{
 textAlign:'center',
-marginBottom:'30px'
+marginBottom:'25px'
 }}
 >
 
 <h1
 style={{
 margin:'0',
-fontSize:'32px',
+fontSize:'30px',
 color:'#8B5CF6',
 letterSpacing:'2px'
 }}
@@ -72,9 +118,8 @@ ZONA TERRITORIAL
 
 <h2
 style={{
-margin:'10px 0 5px 0',
-fontSize:'22px',
-color:'white'
+margin:'5px 0',
+fontSize:'22px'
 }}
 >
 MONTE QUEMADO
@@ -83,8 +128,7 @@ MONTE QUEMADO
 <div
 style={{
 color:'#C4B5FD',
-fontWeight:'bold',
-fontSize:'16px'
+fontWeight:'bold'
 }}
 >
 La Libertad Avanza
@@ -92,18 +136,25 @@ La Libertad Avanza
 
 </div>
 
+<h3
+style={{
+textAlign:'center',
+marginBottom:'15px'
+}}
+>
+Ingresar
+</h3>
+
 <input
 placeholder='Correo electrónico'
 value={email}
 onChange={(e)=>
-setEmail(
-e.target.value
-)
+setEmail(e.target.value)
 }
 style={{
 width:'100%',
 padding:'12px',
-marginBottom:'12px',
+marginBottom:'10px',
 borderRadius:'10px',
 border:'1px solid #374151',
 background:'#1F2937',
@@ -117,14 +168,12 @@ type='password'
 placeholder='Contraseña'
 value={password}
 onChange={(e)=>
-setPassword(
-e.target.value
-)
+setPassword(e.target.value)
 }
 style={{
 width:'100%',
 padding:'12px',
-marginBottom:'20px',
+marginBottom:'15px',
 borderRadius:'10px',
 border:'1px solid #374151',
 background:'#1F2937',
@@ -148,6 +197,112 @@ cursor:'pointer'
 }}
 >
 INGRESAR AL SISTEMA
+</button>
+
+<hr
+style={{
+margin:'25px 0',
+border:'1px solid #374151'
+}}
+/>
+
+<h3
+style={{
+textAlign:'center',
+color:'#C4B5FD',
+marginBottom:'15px'
+}}
+>
+Crear cuenta
+</h3>
+
+<input
+placeholder='Nombre completo'
+value={nombre}
+onChange={(e)=>
+setNombre(e.target.value)
+}
+style={{
+width:'100%',
+padding:'12px',
+marginBottom:'10px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
+}}
+/>
+
+<input
+placeholder='Correo electrónico'
+value={registroEmail}
+onChange={(e)=>
+setRegistroEmail(e.target.value)
+}
+style={{
+width:'100%',
+padding:'12px',
+marginBottom:'10px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
+}}
+/>
+
+<input
+type='password'
+placeholder='Contraseña'
+value={registroPassword}
+onChange={(e)=>
+setRegistroPassword(e.target.value)
+}
+style={{
+width:'100%',
+padding:'12px',
+marginBottom:'10px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
+}}
+/>
+
+<input
+placeholder='Código de invitación'
+value={codigoInvitacion}
+onChange={(e)=>
+setCodigoInvitacion(e.target.value)
+}
+style={{
+width:'100%',
+padding:'12px',
+marginBottom:'15px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
+}}
+/>
+
+<button
+onClick={registrar}
+style={{
+width:'100%',
+padding:'14px',
+background:'#059669',
+color:'white',
+border:'none',
+borderRadius:'10px',
+fontWeight:'bold',
+cursor:'pointer'
+}}
+>
+CREAR CUENTA
 </button>
 
 <div
