@@ -76,6 +76,8 @@ const [relevamientos,setRelevamientos]=
 useState([])
 const [guardando,setGuardando]=
 useState(false)
+const [vista,setVista]=
+useState('mapa')
 const relevamientosFiltrados=
 
 relevamientos.filter(
@@ -86,6 +88,38 @@ r.territorio===
 territorioSeleccionado
 
 )
+const totalRelevamientos =
+relevamientos.length
+
+const totalBarrios =
+territorios.filter(
+t=>t.tipo==='Barrio'
+).length
+
+const totalParajes =
+territorios.filter(
+t=>t.tipo==='Paraje'
+).length
+
+const presenciaAlta =
+relevamientos.filter(
+r=>r.estadoPolitico==='Alto'
+).length
+
+const presenciaMedia =
+relevamientos.filter(
+r=>r.estadoPolitico==='Medio'
+).length
+
+const presenciaBaja =
+relevamientos.filter(
+r=>r.estadoPolitico==='Bajo'
+).length
+
+const sinDatos =
+relevamientos.filter(
+r=>r.estadoPolitico==='Sin datos'
+).length
 
 useEffect(()=>{
 
@@ -115,6 +149,7 @@ listener.subscription.unsubscribe()
 }
 
 },[])
+
 
 async function cargarRelevamientos(){
 
@@ -190,7 +225,6 @@ territorioActual?.tipo==='Paraje'
 
 const esMovil=
 window.innerWidth<768
-
 
 const campo={
 
@@ -372,7 +406,38 @@ padding:'20px',
 overflow:'auto'
 }}
 >
+{
+vista==='estadisticas' && (
 
+<div>
+
+<h2>📊 Estadísticas Generales</h2>
+
+<div style={{marginBottom:'15px'}}>
+📝 Relevamientos: {totalRelevamientos}
+</div>
+
+<div style={{marginBottom:'15px'}}>
+🏘️ Barrios: {totalBarrios}
+</div>
+
+<div style={{marginBottom:'15px'}}>
+🌳 Parajes: {totalParajes}
+</div>
+
+<hr />
+
+<h3>Presencia de la Intendencia</h3>
+
+<div>🔴 Alta: {presenciaAlta}</div>
+<div>🟡 Media: {presenciaMedia}</div>
+<div>🟢 Baja: {presenciaBaja}</div>
+<div>⚪ Sin datos: {sinDatos}</div>
+
+</div>
+
+)
+}
 <div
 style={{
 display:'flex',
@@ -382,9 +447,84 @@ marginBottom:'15px'
 }}
 >
 
-<h1>
-Relevamiento
+<div
+style={{
+textAlign:'center',
+width:'100%'
+}}
+>
+
+<h1
+style={{
+margin:'0',
+color:'#8B5CF6'
+}}
+>
+ZONA TERRITORIAL
 </h1>
+
+<h2
+style={{
+margin:'5px 0'
+}}
+>
+MONTE QUEMADO
+</h2>
+
+<div
+style={{
+fontWeight:'bold',
+color:'#8B5CF6'
+}}
+>
+La Libertad Avanza
+</div>
+
+<div
+style={{
+display:'flex',
+gap:'10px',
+marginTop:'15px'
+}}
+>
+
+<button
+onClick={()=>setVista('mapa')}
+style={{
+flex:1,
+padding:'10px',
+background:
+vista==='mapa'
+?'#6D28D9'
+:'#333',
+color:'white',
+border:'none',
+borderRadius:'8px'
+}}
+>
+🗺️ Mapa
+</button>
+
+<button
+onClick={()=>setVista('estadisticas')}
+style={{
+flex:1,
+padding:'10px',
+background:
+vista==='estadisticas'
+?'#6D28D9'
+:'#333',
+color:'white',
+border:'none',
+borderRadius:'8px'
+}}
+>
+📊 Estadísticas
+</button>
+
+</div>
+
+</div>
 
 <button
 onClick={async()=>{
@@ -406,7 +546,9 @@ Cerrar sesión
 </button>
 
 </div>
-
+{
+vista==='mapa' && (
+<>
 <select
 style={campo}
 value={zonaSeleccionada}
@@ -692,6 +834,7 @@ marginBottom:'10px'
 <div>
 📝 {r.observaciones}
 </div>
+
 {
 r.imagenes && (
 
@@ -702,7 +845,6 @@ marginTop:'10px'
 >
 
 {
-
 r.imagenes
 .split(',')
 
@@ -728,10 +870,17 @@ borderRadius:'8px'
 
 )
 }
+
 </div>
 
 ))
 }
+
+</>
+
+)
+}
+
 </div>
 
 <div
@@ -743,7 +892,6 @@ esMovil
 :'100vh'
 }}
 >
-
 <MapContainer
 center={[-25.805,-62.834]}
 zoom={11}
