@@ -1166,15 +1166,6 @@ fontWeight:'bold'
 )
 }
 
-<div style={{marginBottom:'8px'}}>
-🚦 Referencia
-</div>
-
-<div>🔴 Alta</div>
-<div>🟡 Media</div>
-<div>🟢 Baja</div>
-<div>⚪ Sin datos</div>
-
 </div>
 
 <div
