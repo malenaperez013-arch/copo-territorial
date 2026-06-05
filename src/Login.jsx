@@ -5,31 +5,27 @@ export default function Login(){
 
 const [email,setEmail]=useState('')
 const [password,setPassword]=useState('')
+const [mostrarPassword,setMostrarPassword]=useState(false)
+const [mostrarRegistro,setMostrarRegistro] = useState(false)
 
 const [nombre,setNombre]=useState('')
 const [registroEmail,setRegistroEmail]=useState('')
 const [registroPassword,setRegistroPassword]=useState('')
 const [codigoInvitacion,setCodigoInvitacion]=useState('')
+const [mostrarRegistroPassword,setMostrarRegistroPassword]=useState(false)
 
 const CODIGO_INVITACION = 'LLA2026'
 
 async function ingresar(){
 
 const {error}=await supabase.auth.signInWithPassword({
-
 email,
 password
-
 })
 
 if(error){
-
-alert(
-'Usuario o contraseña incorrectos'
-)
-
+alert('Usuario o contraseña incorrectos')
 return
-
 }
 
 }
@@ -37,40 +33,57 @@ return
 async function registrar(){
 
 if(codigoInvitacion !== CODIGO_INVITACION){
-
-alert(
-'Código de invitación incorrecto'
-)
-
+alert('Código de invitación incorrecto')
 return
-
 }
 
-const { error } =
-await supabase.auth.signUp({
-
+const { error } = await supabase.auth.signUp({
 email: registroEmail,
 password: registroPassword
-
 })
 
 if(error){
-
 alert(error.message)
-
 return
-
 }
 
-alert(
-'Cuenta creada correctamente. Ya puedes iniciar sesión.'
-)
+alert('Cuenta creada correctamente. Ya puedes iniciar sesión.')
 
 setNombre('')
 setRegistroEmail('')
 setRegistroPassword('')
 setCodigoInvitacion('')
+setMostrarRegistro(false)
 
+}
+
+const inputStyle={
+width:'100%',
+padding:'12px',
+marginBottom:'10px',
+borderRadius:'10px',
+border:'1px solid #374151',
+background:'#1F2937',
+color:'white',
+boxSizing:'border-box'
+}
+
+const passwordInputStyle={
+...inputStyle,
+paddingRight:'45px',
+marginBottom:0
+}
+
+const eyeButtonStyle={
+position:'absolute',
+right:'8px',
+top:'50%',
+transform:'translateY(-50%)',
+background:'transparent',
+border:'none',
+color:'white',
+cursor:'pointer',
+fontSize:'18px'
 }
 
 return(
@@ -98,12 +111,7 @@ color:'white'
 }}
 >
 
-<div
-style={{
-textAlign:'center',
-marginBottom:'25px'
-}}
->
+<div style={{textAlign:'center',marginBottom:'25px'}}>
 
 <h1
 style={{
@@ -116,71 +124,46 @@ letterSpacing:'2px'
 ZONA TERRITORIAL
 </h1>
 
-<h2
-style={{
-margin:'5px 0',
-fontSize:'22px'
-}}
->
+<h2 style={{margin:'5px 0',fontSize:'22px'}}>
 MONTE QUEMADO
 </h2>
 
-<div
-style={{
-color:'#C4B5FD',
-fontWeight:'bold'
-}}
->
+<div style={{color:'#C4B5FD',fontWeight:'bold'}}>
 La Libertad Avanza
 </div>
 
 </div>
 
-<h3
-style={{
-textAlign:'center',
-marginBottom:'15px'
-}}
->
+<h3 style={{textAlign:'center',marginBottom:'15px'}}>
 Ingresar
 </h3>
 
 <input
 placeholder='Correo electrónico'
 value={email}
-onChange={(e)=>
-setEmail(e.target.value)
-}
-style={{
-width:'100%',
-padding:'12px',
-marginBottom:'10px',
-borderRadius:'10px',
-border:'1px solid #374151',
-background:'#1F2937',
-color:'white',
-boxSizing:'border-box'
-}}
+onChange={(e)=>setEmail(e.target.value)}
+style={inputStyle}
 />
 
+<div style={{position:'relative',marginBottom:'10px'}}>
+
 <input
-type='password'
+type={mostrarPassword ? 'text' : 'password'}
 placeholder='Contraseña'
 value={password}
-onChange={(e)=>
-setPassword(e.target.value)
-}
-style={{
-width:'100%',
-padding:'12px',
-marginBottom:'15px',
-borderRadius:'10px',
-border:'1px solid #374151',
-background:'#1F2937',
-color:'white',
-boxSizing:'border-box'
-}}
+onChange={(e)=>setPassword(e.target.value)}
+style={passwordInputStyle}
 />
+
+<button
+type='button'
+onClick={()=>setMostrarPassword(!mostrarPassword)}
+style={eyeButtonStyle}
+>
+{mostrarPassword ? '🙈' : '👁️'}
+</button>
+
+</div>
 
 <button
 onClick={ingresar}
@@ -199,93 +182,68 @@ cursor:'pointer'
 INGRESAR AL SISTEMA
 </button>
 
-<hr
-style={{
-margin:'25px 0',
-border:'1px solid #374151'
-}}
-/>
+<hr style={{margin:'25px 0',border:'1px solid #374151'}}/>
 
-<h3
+<div
+onClick={()=>setMostrarRegistro(!mostrarRegistro)}
 style={{
+cursor:'pointer',
 textAlign:'center',
 color:'#C4B5FD',
+fontWeight:'bold',
 marginBottom:'15px'
 }}
 >
-Crear cuenta
-</h3>
+{mostrarRegistro
+? '▼ Ocultar registro'
+: '▶ Crear cuenta'}
+</div>
+
+{
+mostrarRegistro && (
+<>
 
 <input
 placeholder='Nombre completo'
 value={nombre}
-onChange={(e)=>
-setNombre(e.target.value)
-}
-style={{
-width:'100%',
-padding:'12px',
-marginBottom:'10px',
-borderRadius:'10px',
-border:'1px solid #374151',
-background:'#1F2937',
-color:'white',
-boxSizing:'border-box'
-}}
+onChange={(e)=>setNombre(e.target.value)}
+style={inputStyle}
 />
 
 <input
 placeholder='Correo electrónico'
 value={registroEmail}
-onChange={(e)=>
-setRegistroEmail(e.target.value)
-}
-style={{
-width:'100%',
-padding:'12px',
-marginBottom:'10px',
-borderRadius:'10px',
-border:'1px solid #374151',
-background:'#1F2937',
-color:'white',
-boxSizing:'border-box'
-}}
+onChange={(e)=>setRegistroEmail(e.target.value)}
+style={inputStyle}
 />
 
+<div style={{position:'relative',marginBottom:'10px'}}>
+
 <input
-type='password'
+type={mostrarRegistroPassword ? 'text' : 'password'}
 placeholder='Contraseña'
 value={registroPassword}
-onChange={(e)=>
-setRegistroPassword(e.target.value)
-}
-style={{
-width:'100%',
-padding:'12px',
-marginBottom:'10px',
-borderRadius:'10px',
-border:'1px solid #374151',
-background:'#1F2937',
-color:'white',
-boxSizing:'border-box'
-}}
+onChange={(e)=>setRegistroPassword(e.target.value)}
+style={passwordInputStyle}
 />
+
+<button
+type='button'
+onClick={()=>setMostrarRegistroPassword(!mostrarRegistroPassword)}
+style={eyeButtonStyle}
+>
+{mostrarRegistroPassword ? '🙈' : '👁️'}
+</button>
+
+</div>
 
 <input
 placeholder='Código de invitación'
 value={codigoInvitacion}
-onChange={(e)=>
-setCodigoInvitacion(e.target.value)
-}
+onChange={(e)=>setCodigoInvitacion(e.target.value)}
 style={{
-width:'100%',
-padding:'12px',
-marginBottom:'15px',
-borderRadius:'10px',
-border:'1px solid #374151',
-background:'#1F2937',
-color:'white',
-boxSizing:'border-box'
+...inputStyle,
+marginBottom:'15px'
 }}
 />
 
@@ -304,6 +262,10 @@ cursor:'pointer'
 >
 CREAR CUENTA
 </button>
+
+</>
+)
+}
 
 <div
 style={{

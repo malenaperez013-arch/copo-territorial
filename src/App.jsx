@@ -101,6 +101,13 @@ territorios.filter(
 t=>t.tipo==='Paraje'
 ).length
 
+const cobertura =
+Math.round(
+(totalRelevamientos /
+(totalBarrios + totalParajes))
+* 100
+) || 0
+
 const presenciaAlta =
 relevamientos.filter(
 r=>r.estadoPolitico==='Alto'
@@ -120,6 +127,7 @@ const sinDatos =
 relevamientos.filter(
 r=>r.estadoPolitico==='Sin datos'
 ).length
+
 const totalTerritorios =
 territorios.length
 
@@ -425,18 +433,91 @@ vista==='estadisticas' && (
 
 <div>
 
-<h2>📊 Estadísticas Generales</h2>
+<h2
+style={{
+textAlign:'center',
+marginBottom:'20px',
+color:'#8B5CF6'
+}}
+>
+📊 Estadísticas Generales
+</h2>
 
-<div style={{marginBottom:'15px'}}>
-📝 Relevamientos: {totalRelevamientos}
+<div
+style={{
+display:'grid',
+gridTemplateColumns:'1fr 1fr',
+gap:'10px',
+marginBottom:'20px'
+}}
+>
+
+<div
+style={{
+background:'#111827',
+color:'white',
+padding:'15px',
+borderRadius:'12px',
+textAlign:'center',
+border:'1px solid #374151'
+}}
+>
+<div style={{fontSize:'28px',fontWeight:'bold'}}>
+{totalRelevamientos}
+</div>
+<div>📝 Relevamientos</div>
 </div>
 
-<div style={{marginBottom:'15px'}}>
-🏘️ Barrios: {totalBarrios}
+<div
+style={{
+background:'#111827',
+color:'white',
+padding:'15px',
+borderRadius:'12px',
+textAlign:'center',
+border:'1px solid #374151'
+}}
+>
+<div style={{fontSize:'28px',fontWeight:'bold'}}>
+{totalBarrios}
+</div>
+<div>🏘️ Barrios</div>
 </div>
 
-<div style={{marginBottom:'15px'}}>
-🌳 Parajes: {totalParajes}
+<div
+style={{
+background:'#111827',
+color:'white',
+padding:'15px',
+borderRadius:'12px',
+textAlign:'center',
+border:'1px solid #374151'
+}}
+>
+<div style={{fontSize:'28px',fontWeight:'bold'}}>
+{totalParajes}
+</div>
+<div>🌳 Parajes</div>
+</div>
+
+<div
+style={{
+background:'#6D28D9',
+color:'white',
+padding:'15px',
+borderRadius:'12px',
+textAlign:'center'
+}}
+>
+<div style={{fontSize:'28px',fontWeight:'bold'}}>
+{Math.round(
+(totalRelevamientos /
+territorios.length) * 100
+) || 0}%
+</div>
+<div>📈 Cobertura</div>
+</div>
+
 </div>
 
 <hr />
@@ -486,10 +567,54 @@ marginBottom:'8px'
 >
 ⚪ Sin datos: {sinDatos}
 </div>
+<hr style={{margin:'20px 0'}} />
 
+<h3
+style={{
+textAlign:'center',
+color:'#8B5CF6'
+}}
+>
+📍 Territorios pendientes
+</h3>
+
+<div
+style={{
+background:'#111827',
+padding:'15px',
+borderRadius:'12px',
+border:'1px solid #374151'
+}}
+>
+
+{
+territorios
+.filter(t=>
+
+!relevamientos.some(
+r=>r.territorio===t.nombre
+)
+
+)
+.slice(0,10)
+.map(t=>(
+
+<div
+key={t.id}
+style={{
+padding:'5px 0'
+}}
+>
+⚪ {t.nombre}
+</div>
+
+))
+}
+
+</div>
 <hr />
 
-<h3>📍 Cobertura Territorial</h3>
+<h3>{cobertura}%</h3>
 <h3>⚠️ Territorios pendientes</h3>
 
 {
@@ -1011,7 +1136,6 @@ url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 />
 
 {
-
 territorios.map(t=>{
 
 const datosTerritorio=
@@ -1025,6 +1149,25 @@ r=>r.territorio===t.nombre
 const ultimoRelevamiento=
 
 datosTerritorio[0]
+
+let colorPoligono = '#9CA3AF'
+
+if(ultimoRelevamiento){
+
+if(ultimoRelevamiento.estadoPolitico === 'Alto'){
+colorPoligono = '#DC2626'
+}
+
+else if(ultimoRelevamiento.estadoPolitico === 'Medio'){
+colorPoligono = '#F59E0B'
+}
+
+else if(ultimoRelevamiento.estadoPolitico === 'Bajo'){
+colorPoligono = '#16A34A'
+}
+
+}
+
 if(t.visual==='marcador'){
 
 return(
@@ -1137,6 +1280,12 @@ return(
 <Polygon
 key={t.id}
 positions={t.coordenadas}
+pathOptions={{
+color:colorPoligono,
+fillColor:colorPoligono,
+fillOpacity:0.45,
+weight:2
+}}
 eventHandlers={{
 click:()=>{
 setTerritorioSeleccionado(t.nombre)
