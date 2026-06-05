@@ -1133,21 +1133,38 @@ borderRadius:'8px'
 )
 }
 
-</div>
+{
+!esMovil && (
+
 <div
 style={{
 position:'absolute',
 top:'15px',
 right:'15px',
 zIndex:1000,
-background:'white',
+background:'#111827',
+color:'white',
 padding:'12px',
 borderRadius:'10px',
-boxShadow:'0 0 10px rgba(0,0,0,.2)',
+border:'1px solid #374151',
 fontSize:'14px',
 fontWeight:'bold'
 }}
 >
+
+<div style={{marginBottom:'8px'}}>
+🚦 Referencia
+</div>
+
+<div>🔴 Alta</div>
+<div>🟡 Media</div>
+<div>🟢 Baja</div>
+<div>⚪ Sin datos</div>
+
+</div>
+
+)
+}
 
 <div style={{marginBottom:'8px'}}>
 🚦 Referencia
