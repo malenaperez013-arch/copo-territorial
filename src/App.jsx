@@ -78,6 +78,8 @@ const [guardando,setGuardando]=
 useState(false)
 const [vista,setVista]=
 useState('mapa')
+const [modoPresentacion,setModoPresentacion] =
+useState(false)
 const relevamientosFiltrados=
 
 relevamientos.filter(
@@ -748,6 +750,25 @@ borderRadius:'8px'
 📊 Estadísticas
 </button>
 
+<button
+onClick={()=>
+setModoPresentacion(!modoPresentacion)
+}
+style={{
+flex:1,
+padding:'10px',
+background:
+modoPresentacion
+?'#059669'
+:'#333',
+color:'white',
+border:'none',
+borderRadius:'8px'
+}}
+>
+🎥 Presentación
+</button>
+
 </div>
 
 </div>
@@ -773,7 +794,8 @@ Cerrar sesión
 
 </div>
 {
-vista==='mapa' && (
+vista==='mapa' &&
+!modoPresentacion && (
 <>
 <select
 style={campo}
@@ -1112,6 +1134,31 @@ borderRadius:'8px'
 }
 
 </div>
+<div
+style={{
+position:'absolute',
+top:'15px',
+right:'15px',
+zIndex:1000,
+background:'white',
+padding:'12px',
+borderRadius:'10px',
+boxShadow:'0 0 10px rgba(0,0,0,.2)',
+fontSize:'14px',
+fontWeight:'bold'
+}}
+>
+
+<div style={{marginBottom:'8px'}}>
+🚦 Referencia
+</div>
+
+<div>🔴 Alta</div>
+<div>🟡 Media</div>
+<div>🟢 Baja</div>
+<div>⚪ Sin datos</div>
+
+</div>
 
 <div
 style={{
@@ -1119,7 +1166,8 @@ flex:1,
 height:
 esMovil
 ?'50vh'
-:'100vh'
+:'100vh',
+position:'relative'
 }}
 >
 <MapContainer
